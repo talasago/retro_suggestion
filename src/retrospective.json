@@ -1,0 +1,16 @@
+{
+  "retrospectives": [
+    {
+      "title": "信号機",
+      "purpose": [1, 3, 4, 5],
+      "wayOfProceeding": "ふりかえりのテーマについて、ふりかえりの最初と最後に、今の心境を信号機の色で表す\n最初と最後の付箋の変化を見て、チームの変化を話し合う\n不安が残っていたら、不安を解消する活動の時間を設定し、別途話し合う",
+      "reference": "https://speakerdeck.com/viva_tweet_x/retrospective-catalog-59bd3a29-314c-45dd-911b-f8e5f1308333?slide=23"
+    },
+    {
+      "title": "タイムラインのハピネスレーダー",
+      "purpose": [1, 2],
+      "wayOfProceeding": "3種類の顔文字と、時系列を書く\n時系列ごとにイベントを並べて、顔文字の場所に付箋を表現\n付箋を眺めて話し合う",
+      "reference": "https://speakerdeck.com/viva_tweet_x/retrospective-catalog-59bd3a29-314c-45dd-911b-f8e5f1308333?slide=28"
+    }
+  ]
+}
