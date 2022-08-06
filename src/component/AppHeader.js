@@ -11,7 +11,7 @@ export default function AppHeader() {
       <AppBar position="static" color="inherit">
         <Toolbar>
           <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            ふりかえり手法を決めてくれるやつ
+            ふりかえり手法決めてくれるくん
           </Typography>
         </Toolbar>
       </AppBar>
