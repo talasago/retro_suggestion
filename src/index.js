@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import AppHeader from "./component/AppHeader";
-import { Container } from "@mui/material";
+import { Container, Card, Box, Paper } from "@mui/material";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -16,11 +16,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import retrospectiveData from "./retrospective.json";
 import retrospectivePurposeName from "./retrospective_purpose_name.json";
 
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+
+import SimpleZoom from "./component/SimpleZoom";
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedPurposes: []
+      checkedPurposes: [],
     };
   }
 
@@ -29,7 +35,9 @@ class Search extends React.Component {
     const targetValue = parseInt(event.target.value, 10);
     const changedCheckedPurposes = event.target.checked
       ? [...checkedPurposes, targetValue]
-      : checkedPurposes.filter(checkedPurpose => checkedPurpose !== targetValue);
+      : checkedPurposes.filter(
+          (checkedPurpose) => checkedPurpose !== targetValue
+        );
 
     this.setState({
       checkedPurposes: changedCheckedPurposes,
@@ -47,7 +55,10 @@ class Search extends React.Component {
         return false;
       }
     );
-    console.log(matchedRetrospectives);
+
+    return matchedRetrospectives[
+      Math.floor(Math.random() * matchedRetrospectives.length)
+    ];
   }
 
   render() {
@@ -62,7 +73,10 @@ class Search extends React.Component {
           <Button
             variant="contained"
             startIcon={<SearchIcon />}
-            onClick={() => this.handleClickSearch()}
+            onClick={() => {
+              const retrospective = this.handleClickSearch();
+              this.props.onClick(retrospective);
+            }}
           >
             検索
           </Button>
@@ -99,13 +113,67 @@ class SearchCheckBox extends React.Component {
   }
 }
 
+class Result extends React.Component {
+  render() {
+    //\nを変換
+    const wayOfProceeding = this.props.wayOfProceeding;
+
+    //名称変換
+    const purposes = this.props.purposes;
+
+    //URL
+    const url = this.props.reference;
+
+    return (
+      <Box>
+        <Card sx={{ minWidth: 275 }}>
+          <CardContent>
+            <Typography variant="h5" component="div">
+              {this.props.title}
+            </Typography>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              ふりかえりの目的複数
+            </Typography>
+            <Typography variant="body2">
+              {this.props.wayOfProceeding}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small">参考URL</Button>
+          </CardActions>
+        </Card>
+      </Box>
+    );
+  }
+}
+
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      determinedRetrospective: {
+        title: null,
+        purposes: null,
+        wayOfProceeding: null,
+        reference: null,
+      },
+    };
+  }
+
   render() {
     return (
       <div>
         <AppHeader />
         <Container>
-          <Search />
+          <Search
+            onClick={(obj) => this.setState({ determinedRetrospective: obj })}
+          />
+          <Result {...this.state.determinedRetrospective} />
+          <SimpleZoom />
         </Container>
       </div>
     );
