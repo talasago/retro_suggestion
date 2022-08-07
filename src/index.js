@@ -44,6 +44,7 @@ class Search extends React.Component {
     });
   }
 
+  //TODO:チェックオフの場合はエラーにしたい
   handleClickSearch() {
     const matchedRetrospectives = retrospectiveData.retrospectives.filter(
       (retrospective) => {
@@ -115,14 +116,28 @@ class SearchCheckBox extends React.Component {
 
 class Result extends React.Component {
   render() {
-    //\nを変換
-    const wayOfProceeding = this.props.wayOfProceeding;
-
-    //名称変換
     const purposes = this.props.purposes;
+    let purpose = null;
+    if (purposes !== null && purposes !== undefined) {
+      purpose = purposes
+        .map((val, idx) => {
+          return retrospectivePurposeName[String(val)];
+        })
+        .join("、");
+    }
 
-    //URL
-    const url = this.props.reference;
+    //進め方は、li要素  の方がいいかも
+    //
+    //  const texts = hoge.split(/(\n)/).map((val, idx) => {
+    //    return (
+    //      <>
+    //      {val.match(/\n/) ? <br /> : val}
+    //      </>
+    //    );
+    //  })
+    //  return <div>{texts}</div>;
+
+    //TODO:最初進め方とURLは非表示にしたいなあ
 
     return (
       <Box>
@@ -136,14 +151,17 @@ class Result extends React.Component {
               color="text.secondary"
               gutterBottom
             >
-              ふりかえりの目的複数
+              {purpose}
             </Typography>
-            <Typography variant="body2">
+            進め方
+            <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
               {this.props.wayOfProceeding}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">参考URL</Button>
+            <Button size="small" href={this.props.reference} target="_blank">
+              参考元リンク
+            </Button>
           </CardActions>
         </Card>
       </Box>
