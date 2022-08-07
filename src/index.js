@@ -22,11 +22,14 @@ import Typography from "@mui/material/Typography";
 
 import SimpleZoom from "./component/SimpleZoom";
 
+import Alert from "@mui/material/Alert";
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       checkedPurposes: [],
+      errorMessage: null,
     };
   }
 
@@ -44,10 +47,10 @@ class Search extends React.Component {
     });
   }
 
-  //TODO:チェックオフの場合はエラーにしたい
   handleClickSearch() {
     const matchedRetrospectives = retrospectiveData.retrospectives.filter(
       (retrospective) => {
+        //TODO: 今はor条件になってるけど、and条件の方がいいかも
         for (let checkedPurpose of this.state.checkedPurposes) {
           if (retrospective.purposes.includes(checkedPurpose)) {
             return true;
@@ -63,8 +66,14 @@ class Search extends React.Component {
   }
 
   render() {
+    const alert =
+      this.state.errorMessage === null ? null : (
+        <Alert severity="error">{this.state.errorMessage}</Alert>
+      );
+
     return (
       <>
+        {alert}
         <div>
           <SearchCheckBox
             onChange={(e) => this.handleChangeCheckedPurposes(e)}
@@ -75,6 +84,17 @@ class Search extends React.Component {
             variant="contained"
             startIcon={<SearchIcon />}
             onClick={() => {
+              if (this.state.errorMessage !== null) {
+                this.setState({
+                  errorMessage: null,
+                });
+              }
+              if (this.state.checkedPurposes.length === 0) {
+                this.setState({
+                  errorMessage: "チェック入れて検索してください。",
+                });
+                return;
+              }
               const retrospective = this.handleClickSearch();
               this.props.onClick(retrospective);
             }}
@@ -137,7 +157,11 @@ class Result extends React.Component {
     //  })
     //  return <div>{texts}</div>;
 
-    //TODO:最初進め方とURLは非表示にしたいなあ
+    //未選択時は非表示。
+    const title = this.props.title;
+    if (title === null || title === undefined) {
+      return null;
+    }
 
     return (
       <Box>
