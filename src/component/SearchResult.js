@@ -11,12 +11,23 @@ import retrospectivePurposeName from "../retrospective_purpose_name.json";
 export default class SearchResult extends React.Component {
   render() {
     const purposes = this.props.purposes;
-    const displayPurposes =
+    const wayOfProceedings = this.props.wayOfProceeding;
+
+    const displayPurpose =
       purposes === null || purposes === undefined
         ? null
-        : purposes.map((val, idx) => {
-            //コードからふりかえり目的の名称変換
-            return <li key={idx}>{retrospectivePurposeName[String(val)]}</li>;
+        : purposes
+            .map((val, _) => {
+              //コードからふりかえり目的の名称変換
+              return retrospectivePurposeName[String(val)];
+            })
+            .join("、");
+
+    const displayWayOfProceedings =
+      wayOfProceedings === null || wayOfProceedings === undefined
+        ? null
+        : wayOfProceedings.split("\n").map((val, idx) => {
+            return <li key={idx}>{val}</li>;
           });
 
     //未選択時は非表示
@@ -29,20 +40,25 @@ export default class SearchResult extends React.Component {
       <Box>
         <Card sx={{ minWidth: 275 }}>
           <CardContent>
-            <Typography variant="h5" component="div">
+            <Typography variant="h4" component="div">
               {this.props.title}
             </Typography>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
-              component={"div"}
               gutterBottom
             >
-              <ul>{displayPurposes}</ul>
+              {displayPurpose}
             </Typography>
-            進め方
-            <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-              {this.props.wayOfProceeding}
+            <Typography variant="h5" component="div">
+              進め方
+            </Typography>
+            <Typography
+              variant="body2"
+              style={{ whiteSpace: "pre-line" }}
+              component={"div"}
+            >
+              <ul>{displayWayOfProceedings}</ul>
             </Typography>
           </CardContent>
           <CardActions>
