@@ -134,27 +134,15 @@ class SearchCheckBox extends React.Component {
 class Result extends React.Component {
   render() {
     const purposes = this.props.purposes;
-    let purpose = null;
-    if (purposes !== null && purposes !== undefined) {
-      purpose = purposes
-        .map((val, idx) => {
-          return retrospectivePurposeName[String(val)];
-        })
-        .join("、");
-    }
+    const displayPurposes =
+      purposes === null || purposes === undefined
+        ? null
+        : purposes.map((val, idx) => {
+            //コードからふりかえり目的の名称変換
+            return <li key={idx}>{retrospectivePurposeName[String(val)]}</li>;
+          });
 
-    //進め方は、li要素  の方がいいかも
-    //
-    //  const texts = hoge.split(/(\n)/).map((val, idx) => {
-    //    return (
-    //      <>
-    //      {val.match(/\n/) ? <br /> : val}
-    //      </>
-    //    );
-    //  })
-    //  return <div>{texts}</div>;
-
-    //未選択時は非表示。
+    //未選択時は非表示
     const title = this.props.title;
     if (title === null || title === undefined) {
       return null;
@@ -172,7 +160,7 @@ class Result extends React.Component {
               color="text.secondary"
               gutterBottom
             >
-              {purpose}
+              <ul>{displayPurposes}</ul>
             </Typography>
             進め方
             <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
