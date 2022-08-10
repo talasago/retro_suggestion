@@ -56,51 +56,13 @@ export default class Search extends React.Component {
         <Alert severity="error">{this.state.errorMessage}</Alert>
       );
 
-    return (
-      <>
-        {alert}
-        <div>
-          <SearchCheckBox
-            onChange={(e) => this.handleChangeCheckedPurposes(e)}
-          />
-        </div>
-        <div>
-          <Button
-            variant="contained"
-            startIcon={<SearchIcon />}
-            onClick={() => {
-              if (this.state.errorMessage !== null) {
-                this.setState({
-                  errorMessage: null,
-                });
-              }
-              if (this.state.checkedPurposes.length === 0) {
-                this.setState({
-                  errorMessage: "チェック入れて検索してください。",
-                });
-                return;
-              }
-              const retrospective = this.handleClickSearch();
-              this.props.onClick(retrospective);
-            }}
-          >
-            検索
-          </Button>
-        </div>
-      </>
-    );
-  }
-}
-
-export class SearchCheckBox extends React.Component {
-  render() {
     const checkBoxes = Object.entries(retrospectivePurposeName).map(
       ([num, name]) => {
         return (
           <FormControlLabel
             control={<Checkbox />}
             label={name}
-            onChange={(e) => this.props.onChange(e)}
+            onChange={(e) => this.handleChangeCheckedPurposes(e)}
             value={num}
             key={num}
           />
@@ -108,13 +70,43 @@ export class SearchCheckBox extends React.Component {
       }
     );
 
-    return (
+    const checkBoxesArea = (
       <FormControl component="fieldset">
         <FormLabel component="legend">ふりかえり目的</FormLabel>
         <FormGroup aria-label="position" row>
           {checkBoxes}
         </FormGroup>
       </FormControl>
+    );
+
+    const searchButton = (
+      <Button
+        variant="contained"
+        startIcon={<SearchIcon />}
+        onClick={() => {
+          if (this.state.errorMessage !== null) {
+            this.setState({ errorMessage: null });
+          }
+          if (this.state.checkedPurposes.length === 0) {
+            this.setState({
+              errorMessage: "チェック入れて検索してください。",
+            });
+            return;
+          }
+          const retrospective = this.handleClickSearch();
+          this.props.onClick(retrospective);
+        }}
+      >
+        検索
+      </Button>
+    );
+
+    return (
+      <>
+        {alert}
+        <div>{checkBoxesArea}</div>
+        <div>{searchButton}</div>
+      </>
     );
   }
 }
