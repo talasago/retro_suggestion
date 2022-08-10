@@ -50,13 +50,10 @@ class Search extends React.Component {
   handleClickSearch() {
     const matchedRetrospectives = retrospectiveData.retrospectives.filter(
       (retrospective) => {
-        //TODO: 今はor条件になってるけど、and条件の方がいいかも
-        for (let checkedPurpose of this.state.checkedPurposes) {
-          if (retrospective.purposes.includes(checkedPurpose)) {
-            return true;
-          }
-        }
-        return false;
+        //チェックボックスはAND条件で検索する
+        return this.state.checkedPurposes.every((checkedPurpose) => {
+          return retrospective.purposes.includes(checkedPurpose);
+        });
       }
     );
 
