@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Card, Box} from "@mui/material";
+import { Card, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -35,6 +35,7 @@ export default class SearchResult extends React.Component {
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
+              component={"div"}
               gutterBottom
             >
               <ul>{displayPurposes}</ul>
