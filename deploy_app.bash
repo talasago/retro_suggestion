@@ -1,6 +1,8 @@
 #!/bin/sh -eu
 cd "$(dirname "${0}")" || exit
 
+bash ./app_remove.bash
+
 npm run build
 
 readonly DEPLOY_DIR="./build/"
