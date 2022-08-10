@@ -35,7 +35,17 @@ export default class Search extends React.Component {
     });
   }
 
-  handleClickSearch() {
+  handleClickSearch(func) {
+    if (this.state.errorMessage !== null) {
+      this.setState({ errorMessage: null });
+    }
+    if (this.state.checkedPurposes.length === 0) {
+      this.setState({
+        errorMessage: "チェックを入れて検索してください",
+      });
+      return;
+    }
+
     const matchedRetrospectives = retrospectiveData.retrospectives.filter(
       (retrospective) => {
         //チェックボックスはAND条件で検索する
@@ -45,9 +55,11 @@ export default class Search extends React.Component {
       }
     );
 
-    return matchedRetrospectives[
-      Math.floor(Math.random() * matchedRetrospectives.length)
-    ];
+    const determinedRetrospective =
+      matchedRetrospectives[
+        Math.floor(Math.random() * matchedRetrospectives.length)
+      ];
+    func(determinedRetrospective);
   }
 
   render() {
@@ -83,19 +95,7 @@ export default class Search extends React.Component {
       <Button
         variant="contained"
         startIcon={<SearchIcon />}
-        onClick={() => {
-          if (this.state.errorMessage !== null) {
-            this.setState({ errorMessage: null });
-          }
-          if (this.state.checkedPurposes.length === 0) {
-            this.setState({
-              errorMessage: "チェック入れて検索してください。",
-            });
-            return;
-          }
-          const retrospective = this.handleClickSearch();
-          this.props.onClick(retrospective);
-        }}
+        onClick={() => this.handleClickSearch(this.props.onClick)}
       >
         検索
       </Button>
