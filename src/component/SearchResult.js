@@ -63,7 +63,7 @@ export default class SearchResult extends React.Component {
           </CardContent>
           <CardActions>
             <Button size="small" href={this.props.reference} target="_blank">
-              参考元リンク
+              引用元リンク
             </Button>
           </CardActions>
         </Card>

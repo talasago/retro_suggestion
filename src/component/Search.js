@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Box } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
@@ -103,9 +104,11 @@ export default class Search extends React.Component {
 
     return (
       <>
-        {alert}
-        <div>{checkBoxesArea}</div>
-        <div>{searchButton}</div>
+        <Box sx={{ m: 1.5}}>
+          {alert}
+          {checkBoxesArea}
+          <div> {searchButton}</div>
+        </Box>
       </>
     );
   }
