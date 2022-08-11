@@ -10,7 +10,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Alert from "@mui/material/Alert";
 
 import retrospectiveData from "../retrospective.json";
-import retrospectivePurposeName from "../retrospective_purpose_name.json";
+import retrospectivePurposeName from "../retrospectivePurposeName.json";
 
 export default class Search extends React.Component {
   constructor(props) {

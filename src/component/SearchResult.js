@@ -6,7 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-import retrospectivePurposeName from "../retrospective_purpose_name.json";
+import retrospectivePurposeName from "../retrospectivePurposeName.json";
 
 export default class SearchResult extends React.Component {
   render() {
