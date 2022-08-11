@@ -1,7 +1,8 @@
-#!/bin/sh -eu
+#!/bin/bash
+set -eu
 cd "$(dirname "${0}")" || exit
 
-bash ./app_remove.bash
+bash ./remove_app.bash
 
 npm run build
 

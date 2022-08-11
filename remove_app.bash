@@ -1,4 +1,5 @@
-#!/bin/sh -eu
+#!/bin/bash
+set -eu
 cd "$(dirname "${0}")" || exit
 
 readonly BUCKET_NAME="retro-suggestion"
