@@ -30,7 +30,6 @@ class App extends React.Component {
             onClick={(obj) => this.setState({ determinedRetrospective: obj })}
           />
           <SearchResult {...this.state.determinedRetrospective} />
-          <SimpleZoom />
         </Container>
       </div>
     );
