@@ -13,7 +13,7 @@ class App extends React.Component {
     this.state = {
       determinedRetrospective: {
         title: null,
-        purposes: null,
+        easyToUseScenes: null,
         wayOfProceeding: null,
         reference: null,
       },

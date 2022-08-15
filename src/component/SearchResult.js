@@ -6,20 +6,20 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-import retrospectivePurposeName from "../retrospectivePurposeName.json";
+import retrospectiveSceneName from "../retrospectiveSceneName.json";
 
 export default class SearchResult extends React.Component {
   render() {
-    const purposes = this.props.purposes;
+    const scenes = this.props.scenes;
     const wayOfProceedings = this.props.wayOfProceeding;
 
-    const displayPurpose =
-      purposes === null || purposes === undefined
+    const displayScene =
+      scenes === null || scenes === undefined
         ? null
-        : purposes
+        : scenes
             .map((val, _) => {
-              //コードからふりかえり目的の名称変換
-              return retrospectivePurposeName[String(val)];
+              //コードからふりかえりの使いやすい場面の名称変換
+              return retrospectiveSceneName[String(val)];
             })
             .join("、");
 
@@ -48,7 +48,7 @@ export default class SearchResult extends React.Component {
               color="text.secondary"
               gutterBottom
             >
-              {displayPurpose}
+              {displayScene}
             </Typography>
             <Typography variant="h5" component="div">
               進め方

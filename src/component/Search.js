@@ -11,28 +11,28 @@ import SearchIcon from "@mui/icons-material/Search";
 import Alert from "@mui/material/Alert";
 
 import retrospectiveData from "../retrospective.json";
-import retrospectivePurposeName from "../retrospectivePurposeName.json";
+import retrospectiveSceneName from "../retrospectiveSceneName.json";
 
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedPurposes: [],
+      checkedScenes: [],
       errorMessage: null,
     };
   }
 
-  handleChangeCheckedPurposes(event) {
-    const checkedPurposes = this.state.checkedPurposes;
+  handleChangeCheckedScenes(event) {
+    const checkedScenes = this.state.checkedScenes;
     const targetValue = parseInt(event.target.value, 10);
-    const changedCheckedPurposes = event.target.checked
-      ? [...checkedPurposes, targetValue]
-      : checkedPurposes.filter(
-          (checkedPurpose) => checkedPurpose !== targetValue
+    const changedCheckedScenes = event.target.checked
+      ? [...checkedScenes, targetValue]
+      : checkedScenes.filter(
+          (checkedScene) => checkedScene !== targetValue
         );
 
     this.setState({
-      checkedPurposes: changedCheckedPurposes,
+      checkedScenes: changedCheckedScenes,
     });
   }
 
@@ -40,7 +40,7 @@ export default class Search extends React.Component {
     if (this.state.errorMessage !== null) {
       this.setState({ errorMessage: null });
     }
-    if (this.state.checkedPurposes.length === 0) {
+    if (this.state.checkedScenes.length === 0) {
       this.setState({
         errorMessage: "チェックを入れて検索してください",
       });
@@ -50,8 +50,8 @@ export default class Search extends React.Component {
     const matchedRetrospectives = retrospectiveData.retrospectives.filter(
       (retrospective) => {
         //チェックボックスはAND条件で検索する
-        return this.state.checkedPurposes.every((checkedPurpose) => {
-          return retrospective.purposes.includes(checkedPurpose);
+        return this.state.checkedScenes.every((checkedScene) => {
+          return retrospective.easyToUseScenes.includes(checkedScene);
         });
       }
     );
@@ -69,13 +69,13 @@ export default class Search extends React.Component {
         <Alert severity="error">{this.state.errorMessage}</Alert>
       );
 
-    const checkBoxes = Object.entries(retrospectivePurposeName).map(
+    const checkBoxes = Object.entries(retrospectiveSceneName).map(
       ([num, name]) => {
         return (
           <FormControlLabel
             control={<Checkbox />}
             label={name}
-            onChange={(e) => this.handleChangeCheckedPurposes(e)}
+            onChange={(e) => this.handleChangeCheckedScenes(e)}
             value={num}
             key={num}
           />
@@ -85,7 +85,7 @@ export default class Search extends React.Component {
 
     const checkBoxesArea = (
       <FormControl component="fieldset">
-        <FormLabel component="legend">ふりかえり目的</FormLabel>
+        <FormLabel component="legend">場面ごとで使いやすいふりかえり手法</FormLabel>
         <FormGroup aria-label="position" row>
           {checkBoxes}
         </FormGroup>
@@ -104,10 +104,10 @@ export default class Search extends React.Component {
 
     return (
       <>
-        <Box sx={{ m: 1.5}}>
+        <Box sx={{ m: 1.5 }}>
           {alert}
           {checkBoxesArea}
-          <div> {searchButton}</div>
+          <div>{searchButton}</div>
         </Box>
       </>
     );
